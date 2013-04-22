@@ -1,0 +1,10 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public  class StreetFactory {
+
+	private StreetFactory() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+}

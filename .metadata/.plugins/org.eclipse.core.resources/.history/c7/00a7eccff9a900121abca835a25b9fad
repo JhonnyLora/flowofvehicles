@@ -1,0 +1,14 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class SimpleIntersectPainter implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+	
+}

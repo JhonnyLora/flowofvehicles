@@ -1,0 +1,13 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class StreetAdvancer implements Runnable{
+
+	@Override
+	public void run() {
+
+		
+	}
+	
+	
+	
+}

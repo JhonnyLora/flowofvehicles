@@ -1,0 +1,10 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class IntersectPolicy {
+
+	public static boolean policy(Vehicle vehicle, Vehicle otherVehicle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

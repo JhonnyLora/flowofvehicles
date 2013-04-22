@@ -1,0 +1,47 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.Random;
+
+public class RandomVehicleCreator implements Runnable{
+
+	@Override
+	public void run() {
+
+		Random random = new Random();
+		
+		while(running){
+			addRandomVehicle();
+			Thread.sleep((random.nextInt(10)+1) *1000 );
+			
+		}
+		
+	}
+	
+	private boolean running;
+
+	private Street street;
+	
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+	
+	
+	public void addRandomVehicle(){
+
+		
+	}
+
+	public Street getStreet() {
+		return street;
+	}
+
+	public void setStreet(Street street) {
+		this.street = street;
+	}
+	
+	
+}

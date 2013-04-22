@@ -1,0 +1,18 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class IntersectPolicy {
+
+	public static boolean policy(Vehicle vehicle, Vehicle otherVehicle) {
+
+		return streetPriorityPolicy(one, two);
+		
+	}
+	
+	
+	public static boolean streetPriorityPolicy(Vehicle one, Vehicle two){
+		
+		return one.getPriority() > two.getPriority();
+		
+	}
+
+}

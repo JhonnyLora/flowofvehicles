@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+package org.jhonnytunes.simulation.flowvehicles;
+
+/**
+ * @author jhonnytunes
+ *
+ */
+public class Vehicle {
+	
+    private enum State {
+
+        RUNNING, STOPED
+    };
+    private State state;
+    private Thread thread;
+    private Street street;
+    private int pos;
+    private String name;
+
+	
+
+}

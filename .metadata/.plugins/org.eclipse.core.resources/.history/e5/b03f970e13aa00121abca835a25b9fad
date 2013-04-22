@@ -1,0 +1,56 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.Random;
+
+public class StreetAdvancer implements Runnable{
+
+	@Override
+	public void run() {
+
+		while (running) {
+			addRandomVehicle();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+	}
+
+	private boolean running = true;
+
+	private Street street;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	public void addRandomVehicle() {
+
+		Random random = new Random();
+		Vehicle vehicle = new Vehicle();
+		vehicle.setName("V" + random.nextInt(10) + random.nextInt(10));
+
+		vehicle.setPriority(random.nextInt(500));
+		vehicle.setRunning(true);
+		
+	}
+
+	public Street getStreet() {
+		return street;
+	}
+
+	public void setStreet(Street street) {
+		this.street = street;
+	}
+
+	
+	
+}

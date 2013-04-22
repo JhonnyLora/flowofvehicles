@@ -1,0 +1,9 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class RandomVehicleFactory {
+
+	
+	private boolean running;
+	
+	
+}

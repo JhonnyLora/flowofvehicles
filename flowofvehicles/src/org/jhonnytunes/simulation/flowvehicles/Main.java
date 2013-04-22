@@ -1,0 +1,52 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.io.IOException;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Street street1 = StreetFactory.getStreet("Street1");
+		street1.setOneWay(true);
+		street1.setSize(10);
+		street1.setStreetSense(StreetSense.RIGHT);
+
+		Street street2 = StreetFactory.getStreet("Street2");
+		street2.setOneWay(true);
+		street2.setStreetSense(StreetSense.DONW);
+		street2.setSize(10);
+
+		street1.addAdjacentStreets(3, street2);
+		street2.addAdjacentStreets(3, street1);
+
+		SimpleIntersectPainter painter = new SimpleIntersectPainter(street1,
+				street2);
+		Thread thread = new Thread(painter);
+		thread.start();
+
+		RandomVehicleCreator creator1 = new RandomVehicleCreator(street1);
+		RandomVehicleCreator creator2 = new RandomVehicleCreator(street2);
+		
+		StreetAdvancer advancer1 = new StreetAdvancer(street1, street2, painter);
+		
+		new Thread(creator1).start();
+		new Thread(creator2).start();
+		
+		new Thread(advancer1).start();
+		
+		
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		painter.setRunning(false);
+		creator1.setRunning(false);
+		creator2.setRunning(false);
+		advancer1.setRunning(false);
+		
+
+	}
+
+}

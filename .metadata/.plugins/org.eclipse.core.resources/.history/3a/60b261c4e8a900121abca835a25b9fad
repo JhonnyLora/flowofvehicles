@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.ArrayList;
+
+/**
+ * @author jhonnytunes
+ *
+ */
+public class Street {
+
+	private enum Sense {LEFT,RIGHT,UP,DONW};
+	
+	
+	private boolean oneWay;
+	
+	//A vehicle is one size. If size is two then is a two lane one way
+	private int size;
+	
+	private Sense sense;
+	//Streets adjacent
+	private ArrayList<Street> adjacentStreet;
+	
+	
+	private String name;
+
+	
+	
+	
+	
+}

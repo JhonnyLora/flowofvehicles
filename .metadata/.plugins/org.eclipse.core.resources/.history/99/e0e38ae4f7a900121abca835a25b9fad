@@ -1,0 +1,256 @@
+/**
+ * 
+ */
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author jhonnytunes
+ * 
+ */
+
+public class Street {
+
+	Street(String name2) {
+
+		this.name = name2;
+	}
+
+	private boolean oneWay;
+
+	// A vehicle is one size. If size is two then is a two lane one way
+	private int size;
+
+	private StreetSense StreetSense;
+	// Streets adjacent
+	private Map<Integer, Street> adjacentStreets;
+
+	private List<Integer> lockedIntersections;
+
+	private List<Vehicle> vehicles;
+
+	private String name;
+
+	public boolean isOneWay() {
+		return oneWay;
+	}
+
+	public void setOneWay(boolean oneWay) {
+		this.oneWay = oneWay;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public StreetSense getStreetSense() {
+		return StreetSense;
+	}
+
+	public void setStreetSense(StreetSense StreetSense) {
+		this.StreetSense = StreetSense;
+	}
+
+	public List<Integer> getLockedIntersections() {
+		return lockedIntersections;
+	}
+
+	public void setLockedIntersections(List<Integer> lockedIntersections) {
+		this.lockedIntersections = lockedIntersections;
+	}
+
+	public void addLockedIntersections(int lockedIntersection) {
+		if (this.lockedIntersections == null)
+			lockedIntersections = new ArrayList<Integer>();
+
+		lockedIntersections.add(lockedIntersection);
+	}
+
+	public Map<Integer, Street> getAdjacentStreets() {
+		return adjacentStreets;
+	}
+
+	public void setAdjacentStreets(Map<Integer, Street> adjacentStreets) {
+		this.adjacentStreets = adjacentStreets;
+	}
+
+	public void addAdjacentStreets(Integer pos, Street street) {
+		if (this.adjacentStreets == null)
+			adjacentStreets = new HashMap<Integer, Street>();
+		adjacentStreets.put(pos, street);
+
+	}
+
+	public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
+	}
+
+	public void addVehicles(Vehicle vehicle) {
+		if (this.vehicles == null)
+			vehicles = new ArrayList<Vehicle>();
+		vehicles.add(vehicle);
+
+		vehicle.setStreet(this);
+
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((adjacentStreets == null) ? 0 : adjacentStreets.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (oneWay ? 1231 : 1237);
+		result = prime * result
+				+ ((StreetSense == null) ? 0 : StreetSense.hashCode());
+		result = prime * result + size;
+		result = prime * result
+				+ ((vehicles == null) ? 0 : vehicles.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Street other = (Street) obj;
+		if (adjacentStreets == null) {
+			if (other.adjacentStreets != null)
+				return false;
+		} else if (!adjacentStreets.equals(other.adjacentStreets))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (oneWay != other.oneWay)
+			return false;
+		if (StreetSense != other.StreetSense)
+			return false;
+		if (size != other.size)
+			return false;
+		if (vehicles == null) {
+			if (other.vehicles != null)
+				return false;
+		} else if (!vehicles.equals(other.vehicles))
+			return false;
+		return true;
+	}
+
+	public void advance(Vehicle vehicle) {
+
+		vehicle.setRunning(true);
+		// Verify Intersection
+		int nextPos = 1 + (vehicle.getPos());
+		boolean intersect = false;
+		Vehicle otherVehicle;
+		for (int pos : adjacentStreets.keySet())
+			if (nextPos == pos) {
+				intersect = true;
+				break;
+			}
+
+		// IF intersect
+		if (intersect) {
+			// IF free intersect is available
+			if (freeIntersection(nextPos))
+				// If nobody is waiting for the intersect. Vehicle arrive first
+				// so
+				// apply FIFO
+				if ((otherVehicle = waitingVehicle(nextPos)) == null) // nobody
+																		// is
+					// waiting
+					moveThruIntersection(vehicle, nextPos);
+				else if (IntersectPolicy.policy(vehicle, otherVehicle))
+					moveThruIntersection(vehicle, nextPos);
+				else {
+					// Policy say I must stop
+					vehicle.setRunning(false);
+					vehicle.setStoppedByPolicy(true);
+				}
+		} else if (carsInFront(nextPos))
+			vehicle.setRunning(false);
+		else
+			vehicle.setPos(nextPos);
+
+	}
+
+	private boolean carsInFront(int nextPos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private void moveThruIntersection(Vehicle vehicle, int nextPos) {
+
+		lockIntersection(nextPos);
+		vehicle.setPos(nextPos);
+		vehicle.setStoppedByPolicy(false);
+		unlockIntersection(nextPos);
+
+	}
+
+	/**
+	 * 
+	 * @return vehicle waiting in
+	 */
+	private Vehicle waitingVehicle(int nextPos) {
+		return null;
+	}
+
+	private void unlockIntersection(int nextPos) {
+
+		this.getLockedIntersections().remove(nextPos);
+		adjacentStreets.get(nextPos).getLockedIntersections().remove(findOtherStreetIntersect(adjacentStreets.get(nextPos));
+		
+	}
+
+	private void lockIntersection(int nextPos) {
+		this.addLockedIntersections(nextPos);
+		adjacentStreets.get(nextPos).addLockedIntersections(
+				findOtherStreetIntersect(adjacentStreets.get(nextPos)));
+
+	}
+
+	private int findOtherStreetIntersect(Street street) {
+
+		Set<Integer> positions = street.getAdjacentStreets().keySet();
+
+		for (int pos : positions)
+			if(street.getAdjacentStreets().get(pos).equals(this))
+				return pos;
+
+			return -1;
+	}
+
+	private boolean freeIntersection(int nextPos) {
+		return false;
+	}
+
+}

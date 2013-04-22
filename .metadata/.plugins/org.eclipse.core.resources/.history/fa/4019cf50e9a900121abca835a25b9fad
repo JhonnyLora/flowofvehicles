@@ -1,0 +1,96 @@
+/**
+ * 
+ */
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.ArrayList;
+
+/**
+ * @author jhonnytunes
+ *
+ */
+public class Street {
+
+	private enum Sense {LEFT,RIGHT,UP,DONW};
+	
+	
+	private boolean oneWay;
+	
+	//A vehicle is one size. If size is two then is a two lane one way
+	private int size;
+	
+	private Sense sense;
+	//Streets adjacent
+	private ArrayList<Street> adjacentStreets;
+	
+	private ArrayList<Vehicle> vehicles;
+	
+	private String name;
+
+	public boolean isOneWay() {
+		return oneWay;
+	}
+
+	public void setOneWay(boolean oneWay) {
+		this.oneWay = oneWay;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public Sense getSense() {
+		return sense;
+	}
+
+	public void setSense(Sense sense) {
+		this.sense = sense;
+	}
+
+	public ArrayList<Street> getAdjacentStreet() {
+		return adjacentStreets;
+	}
+
+	public void setAdjacentStreet(ArrayList<Street> adjacentStreet) {
+		this.adjacentStreets = adjacentStreet;
+	}
+
+	public void addAdjacentStreet(Street adjacentStreet) {
+		if(this.adjacentStreets ==null) adjacentStreets = new ArrayList<Street>();
+		adjacentStreets.add(adjacentStreet);
+		
+	}
+	
+	public ArrayList<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(ArrayList<Vehicle> vehicles) {
+		this.vehicles = vehicles;
+	}
+
+	public void addVehicles(Vehicle vehicle) {
+		if(this.vehicles ==null)  vehicles = new ArrayList<Vehicle>();
+		vehicles.add(vehicle);
+		
+	}
+
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
+	
+	
+	
+	
+}

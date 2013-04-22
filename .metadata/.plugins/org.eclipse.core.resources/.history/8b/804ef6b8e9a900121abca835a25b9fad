@@ -1,0 +1,20 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.Map;
+
+public  class StreetFactory {
+
+	private StreetFactory() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	private static Map<String, Street> streets;
+	
+	private static Street getStreet(String name){
+		
+		
+		
+	}
+	
+	
+}

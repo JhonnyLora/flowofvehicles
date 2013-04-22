@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package org.jhonnytunes.simulation.flowvehicles;
+
+/**
+ * @author jhonnytunes
+ *
+ */
+public class Vehicle {
+	
+    private enum State {
+
+        RUNNING, STOPED
+    };
+    
+    private State state;
+    private Street street;
+    private int pos;
+    private String name;
+	public State getState() {
+		return state;
+	}
+	public void setState(State state) {
+		this.state = state;
+	}
+	
+	public Street getStreet() {
+		return street;
+	}
+	public void setStreet(Street street) {
+		this.street = street;
+	}
+	public int getPos() {
+		return pos;
+	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
+
+}

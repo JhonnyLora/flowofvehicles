@@ -1,0 +1,33 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class SimpleIntersectPainter implements Runnable {
+
+	private volatile boolean running = false;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	@Override
+	public void run() {
+		while (running)
+			paint();
+	}
+
+	private String[][] paint;
+
+	public SimpleIntersectPainter(Street horizontal, Street vertical) {
+
+		paint = new String[horizontal.getSize()][vertical.getSize()];
+
+	}
+
+	public void paint() {
+
+	}
+
+}

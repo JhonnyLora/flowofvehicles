@@ -1,0 +1,95 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class SimpleIntersectPainter implements Runnable {
+
+	private volatile boolean running = false;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	@Override
+	public void run() {
+		while (running)
+			paint();
+	}
+
+	private int horizontalStreetPosition;
+	private int verticalStreetPosition;
+
+	private Street horizontal;
+	private Street vertical;
+	private int horizontalSize;
+	private int verticalSize;
+
+	public SimpleIntersectPainter(Street horizontal, Street vertical) {
+
+		horizontalSize = horizontal.getSize();
+		verticalSize = vertical.getSize();
+		this.horizontal = horizontal;
+		this.vertical = vertical;
+
+		verticalStreetPosition = vertical.findOtherStreetIntersect(horizontal);
+		horizontalStreetPosition = horizontal
+				.findOtherStreetIntersect(vertical);
+
+	}
+
+	public Street getHorizontal() {
+		return horizontal;
+	}
+
+	public Street getVertical() {
+		return vertical;
+	}
+
+	public void print(String string) {
+
+		System.out.print(string);
+	}
+
+	public void paint() {
+
+		for (int i = 0; i < horizontalSize; i++)
+			for (int j = 0; j < verticalSize; j++) {
+
+				// Left side
+				if ((i == horizontalStreetPosition - 1 || i == horizontalStreetPosition + 1)
+						&& j == verticalStreetPosition - 1)
+					print("-------|");
+				// Right side
+				else if ((i == horizontalStreetPosition - 1 || i == horizontalStreetPosition + 1)
+						&& j == verticalStreetPosition + 1)
+					print("|-------");
+
+				else if (j == verticalStreetPosition - 1
+						|| j == verticalStreetPosition + 1)
+					print("|");
+				else if (j == horizontalStreetPosition - 1
+						|| j == horizontalStreetPosition + 1)
+					print("-------");
+				else if (i == horizontalStreetPosition)
+					print(checkIfVehicleHorizontal());
+				else if (j == verticalStreetPosition)
+					print(checkIfVehicleVertical());
+				else
+					print("XXXXX");
+			}
+
+	}
+
+	private String checkIfVehicleVertical() {
+
+		return null;
+	}
+
+	private String checkIfVehicleHorizontal() {
+
+		return null;
+	}
+
+}

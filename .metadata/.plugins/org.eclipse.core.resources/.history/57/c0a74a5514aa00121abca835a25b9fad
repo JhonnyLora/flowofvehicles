@@ -1,0 +1,108 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class SimpleIntersectPainter implements Runnable {
+
+	private volatile boolean running = true;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	@Override
+	public void run() {
+		while (running)
+			paint();
+	}
+
+	private int horizontalStreetPosition;
+	private int verticalStreetPosition;
+
+	private Street horizontal;
+	private Street vertical;
+	private int horizontalSize;
+	private int verticalSize;
+
+	public SimpleIntersectPainter(Street horizontal, Street vertical) {
+
+		horizontalSize = horizontal.getSize();
+		verticalSize = vertical.getSize();
+		this.horizontal = horizontal;
+		this.vertical = vertical;
+
+		verticalStreetPosition = vertical.findOtherStreetIntersect(horizontal);
+		horizontalStreetPosition = horizontal
+				.findOtherStreetIntersect(vertical);
+
+	}
+
+	public Street getHorizontal() {
+		return horizontal;
+	}
+
+	public Street getVertical() {
+		return vertical;
+	}
+
+	public void print(String string) {
+
+		System.out.print(string);
+	}
+
+	public void paint() {
+		print("\u000C");
+		for (int i = 0; i < horizontalSize; i++)
+			for (int j = 0; j < verticalSize; j++) {
+
+				// Left side
+				if ((i == horizontalStreetPosition - 1 || i == horizontalStreetPosition + 1)
+						&& j == verticalStreetPosition - 1)
+					print("-------|");
+				// Right side
+				else if ((i == horizontalStreetPosition - 1 || i == horizontalStreetPosition + 1)
+						&& j == verticalStreetPosition + 1)
+					print("|-------");
+
+				else if (j == verticalStreetPosition - 1
+						|| j == verticalStreetPosition + 1)
+					print("|");
+				else if (j == horizontalStreetPosition - 1
+						|| j == horizontalStreetPosition + 1)
+					print("-------");
+				else if (i == horizontalStreetPosition)
+					print(checkIfVehicleHorizontal(i));
+				else if (j == verticalStreetPosition)
+					print(checkIfVehicleVertical(j));
+				else
+					print("XXXXX");
+
+				print("\n");
+			}
+
+	}
+
+	private String checkIfVehicleVertical(int pos) {
+
+		return checkIfVehicle(pos, vertical);
+	}
+
+	private String checkIfVehicleHorizontal(int pos) {
+
+		return checkIfVehicle(pos, horizontal);
+	}
+
+	private String checkIfVehicle(int pos, Street street) {
+
+		if (street == null || street.getVehicles() == null
+				|| street.getVehicles().isEmpty())
+			return "@EMPTY@";
+		for (Vehicle vehicle : street.getVehicles())
+			if (vehicle.getPos() == pos)
+				return vehicle.toString();
+
+		return "[     ]";
+	}
+}

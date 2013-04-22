@@ -1,0 +1,64 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+import java.util.Random;
+
+public class StreetAdvancer implements Runnable {
+
+	@Override
+	public void run() {
+
+		while (running) {
+			if(!lock) moveVehicles();
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private boolean lock;
+	
+	
+	
+	public boolean isLock() {
+		return lock;
+	}
+
+	public void setLock(boolean lock) {
+		this.lock = lock;
+	}
+
+	private volatile boolean running = true;
+
+	private Street street;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	public void moveVehicles() {
+		this.street.advanceAll();
+	}
+
+	public Street getStreet() {
+		return street;
+	}
+
+	public void setStreet(Street street) {
+		this.street = street;
+	}
+
+	public StreetAdvancer(Street street) {
+		this.street = street;
+
+	}
+
+}

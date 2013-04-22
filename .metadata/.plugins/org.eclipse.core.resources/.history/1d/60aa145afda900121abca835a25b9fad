@@ -1,0 +1,61 @@
+package org.jhonnytunes.simulation.flowvehicles;
+
+public class SimpleIntersectPainter implements Runnable {
+
+	private volatile boolean running = false;
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	@Override
+	public void run() {
+		while (running)
+			paint();
+	}
+
+	private int horizontalStreetPosition;
+	private int verticalStreetPosition;
+	
+	private String[][] picture;
+	private Street horizontal;
+	private Street vertical;
+
+	
+	public SimpleIntersectPainter(Street horizontal, Street vertical) {
+
+		picture = new String[horizontal.getSize()][vertical.getSize()];
+		this.horizontal = horizontal;
+		this.vertical = vertical;
+		
+		verticalStreetPosition = vertical.findOtherStreetIntersect(horizontal);
+		horizontalStreetPosition = horizontal.findOtherStreetIntersect(vertical);
+
+	}
+	
+	
+
+	public Street getHorizontal() {
+		return horizontal;
+	}
+
+	public Street getVertical() {
+		return vertical;
+	}
+
+	public void paint() {
+
+		for(int i=0; i<picture.length; i++)
+			for(int j=0; j< picture[i].length; j++){
+
+				//IF not street 
+				
+			}
+		
+	}
+
+}
